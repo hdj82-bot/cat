@@ -1,0 +1,390 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fce4ec, #f3e5f5, #e8eaf6);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.calculator {
+  width: 340px;
+  background-color: #fff;
+  border-radius: 28px;
+  padding: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== 고양이 캐릭터 ===== */
+.character-area {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 110px;
+  position: relative;
+  margin-bottom: 4px;
+}
+
+.cat {
+  position: relative;
+  width: 80px;
+  height: 70px;
+  transition: transform 0.2s ease;
+}
+
+.cat.bounce {
+  animation: catBounce 0.4s ease;
+}
+
+.cat.tilt-left {
+  animation: tiltLeft 0.45s ease;
+}
+
+.cat.tilt-right {
+  animation: tiltRight 0.45s ease;
+}
+
+.cat.jump {
+  animation: catJump 0.5s ease;
+}
+
+@keyframes catBounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15, 0.9); }
+}
+
+@keyframes tiltLeft {
+  0%, 100% { transform: rotate(0deg); }
+  40% { transform: rotate(-15deg); }
+}
+
+@keyframes tiltRight {
+  0%, 100% { transform: rotate(0deg); }
+  40% { transform: rotate(15deg); }
+}
+
+@keyframes catJump {
+  0%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-18px) scale(1.1); }
+}
+
+.cat-face {
+  width: 64px;
+  height: 54px;
+  background: #ffe0b2;
+  border-radius: 50% 50% 46% 46%;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+/* 귀 */
+.cat-ear {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-bottom: 22px solid #ffe0b2;
+  z-index: 1;
+  top: 2px;
+}
+
+.cat-ear.left { left: 6px; transform: rotate(-8deg); }
+.cat-ear.right { right: 6px; transform: rotate(8deg); }
+
+.cat-ear::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 14px solid #ffab91;
+  top: 6px;
+  left: -8px;
+}
+
+/* 눈 */
+.cat-eye {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: #333;
+  border-radius: 50%;
+  top: 16px;
+  overflow: hidden;
+}
+
+.cat-eye.left { left: 13px; }
+.cat-eye.right { right: 13px; }
+
+.pupil {
+  width: 7px;
+  height: 7px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: all 0.15s;
+}
+
+/* 눈 반짝 */
+.cat-eye.sparkle {
+  animation: sparkleEye 0.45s ease;
+}
+
+@keyframes sparkleEye {
+  0%, 100% { transform: scale(1); }
+  30% { transform: scaleY(0.1); }
+  60% { transform: scale(1.1); }
+}
+
+/* 코 */
+.cat-nose {
+  position: absolute;
+  width: 8px;
+  height: 6px;
+  background: #e8967a;
+  border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* 입 */
+.cat-mouth {
+  position: absolute;
+  width: 16px;
+  height: 6px;
+  top: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.cat-mouth::before,
+.cat-mouth::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 8px;
+  border-bottom: 2px solid #c97a63;
+  border-radius: 0 0 50% 50%;
+  top: 0;
+}
+
+.cat-mouth::before { left: -2px; }
+.cat-mouth::after { right: -2px; }
+
+/* 입 벌리기 (앙!) */
+.cat-face.open-mouth .cat-mouth::before,
+.cat-face.open-mouth .cat-mouth::after {
+  display: none;
+}
+
+.cat-face.open-mouth .cat-mouth {
+  width: 14px;
+  height: 10px;
+  background: #e8967a;
+  border-radius: 30% 30% 50% 50%;
+  top: 35px;
+}
+
+/* 볼터치 */
+.cat-blush {
+  position: absolute;
+  width: 14px;
+  height: 8px;
+  background: rgba(255, 138, 128, 0.45);
+  border-radius: 50%;
+  top: 32px;
+}
+
+.cat-blush.left { left: 4px; }
+.cat-blush.right { right: 4px; }
+
+.cat-blush.glow {
+  animation: blushGlow 0.5s ease;
+}
+
+@keyframes blushGlow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.5); background: rgba(255, 100, 100, 0.6); }
+}
+
+/* 발 */
+.cat-paw {
+  position: absolute;
+  bottom: -2px;
+  font-size: 16px;
+  z-index: 3;
+  transition: transform 0.2s ease;
+}
+
+.cat-paw.left { left: -6px; }
+.cat-paw.right { right: -6px; }
+
+.cat-paw.wave-left {
+  animation: waveLeft 0.5s ease;
+}
+
+.cat-paw.wave-right {
+  animation: waveRight 0.5s ease;
+}
+
+@keyframes waveLeft {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  50% { transform: rotate(-30deg) translateY(-10px); }
+}
+
+@keyframes waveRight {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  50% { transform: rotate(30deg) translateY(-10px); }
+}
+
+/* 말풍선 */
+.speech-bubble {
+  position: absolute;
+  top: 0;
+  right: 30px;
+  background: #fff;
+  border: 2px solid #ffab91;
+  border-radius: 16px;
+  padding: 4px 14px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #e8967a;
+  opacity: 0;
+  transform: scale(0.5) translateY(10px);
+  transition: all 0.2s ease;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(232, 150, 122, 0.2);
+}
+
+.speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 20px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 8px solid #ffab91;
+}
+
+.speech-bubble.show {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* ===== 디스플레이 ===== */
+.display {
+  background: linear-gradient(135deg, #fafafa, #f5f5f5);
+  padding: 16px 16px;
+  text-align: right;
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border-radius: 16px;
+  margin-bottom: 12px;
+}
+
+.expression {
+  color: #aaa;
+  font-size: 16px;
+  min-height: 22px;
+  word-break: break-all;
+}
+
+.result {
+  color: #333;
+  font-size: 44px;
+  font-weight: 300;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ===== 버튼 ===== */
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.btn {
+  width: 100%;
+  height: 58px;
+  border: none;
+  border-radius: 16px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.15s, background 0.15s;
+  font-weight: 500;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.btn:active {
+  transform: translateY(1px) scale(0.97);
+  box-shadow: none;
+}
+
+/* 숫자 */
+.btn.number {
+  background: #f5f5f5;
+  color: #333;
+}
+
+.btn.number:hover {
+  background: #eee;
+}
+
+/* 기능 버튼 (AC, +/-, %) */
+.btn.clear,
+.btn.func {
+  background: #e0e0e0;
+  color: #555;
+  font-weight: 600;
+}
+
+.btn.clear:hover,
+.btn.func:hover {
+  background: #d5d5d5;
+}
+
+/* 연산자 */
+.btn.operator {
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  color: #fff;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.btn.operator:hover {
+  background: linear-gradient(135deg, #ff8a8e, #f5c0b4);
+  box-shadow: 0 4px 14px rgba(255, 154, 158, 0.35);
+}
+
+/* 0 버튼 */
+.btn.zero {
+  grid-column: span 2;
+  border-radius: 16px;
+  text-align: left;
+  padding-left: 24px;
+}
